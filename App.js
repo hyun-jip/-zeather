@@ -7,7 +7,7 @@ import { Ionicons, AntDesign } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import Stack from "./Navigation/Stack";
-import Tabs from "./Navigation/Tabs";
+import axios from "axios";
 
 const cacheImages = (images) =>
   images.map((image) => {
