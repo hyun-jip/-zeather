@@ -10,7 +10,8 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
-const getHeaderName = (route) => getFocusedRouteNameFromRoute(route) || "Today";
+const getHeaderName = (route) =>
+  getFocusedRouteNameFromRoute(route) || "오늘 날씨";
 
 export default ({ navigation, route }) => {
   useLayoutEffect(() => {
@@ -24,13 +25,13 @@ export default ({ navigation, route }) => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Today") {
+          if (route.name === "오늘") {
             iconName = "smileo";
-          } else if (route.name === "Forecast") {
+          } else if (route.name === "미래") {
             iconName = "linechart";
-          } else if (route.name === "Past") {
+          } else if (route.name === "과거") {
             iconName = "profile";
-          } else if (route.name === "Settings") {
+          } else if (route.name === "설정") {
             iconName = "setting";
           }
           return (
@@ -43,10 +44,10 @@ export default ({ navigation, route }) => {
         },
       })}
     >
-      <Tab.Screen name="Today" component={Today} />
-      <Tab.Screen name="Forecast" component={Forecast} />
-      <Tab.Screen name="Past" component={Past} />
-      <Tab.Screen name="Settings" component={Settings} />
+      <Tab.Screen name="오늘" component={Today} />
+      <Tab.Screen name="미래" component={Forecast} />
+      <Tab.Screen name="과거" component={Past} />
+      <Tab.Screen name="설정" component={Settings} />
     </Tab.Navigator>
   );
 };
