@@ -1,8 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
-import Today from "../Screen/Today";
-import Forecast from "../Screen/Forecast";
+import Today from "../Screen/Today/TodayBG";
+import Forecast from "../Screen/Forecast/ForecastBG";
 import Past from "../Screen/Past";
 import Settings from "../Screen/Settings";
 import { useLayoutEffect } from "react";

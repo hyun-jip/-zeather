@@ -8,6 +8,7 @@ import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import Stack from "./Navigation/Stack";
 import axios from "axios";
+import { getWeather } from "./API";
 
 const cacheImages = (images) =>
   images.map((image) => {
@@ -29,6 +30,7 @@ export default function App() {
     ]);
 
     const fonts = cacheFonts([Ionicons.font, AntDesign.font]);
+
     return Promise.all([...images, ...fonts]);
   };
 
