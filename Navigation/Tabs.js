@@ -10,8 +10,7 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
-const getHeaderName = (route) =>
-  getFocusedRouteNameFromRoute(route) || "오늘 날씨";
+const getHeaderName = (route) => getFocusedRouteNameFromRoute(route) || "오늘";
 
 export default ({ navigation, route }) => {
   useLayoutEffect(() => {
