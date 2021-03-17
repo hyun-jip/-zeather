@@ -12,13 +12,15 @@ const DataContainer = styled.View`
 `;
 
 export default ({ refreshFn, loading, currentData }) => {
+  const currentHeader = currentData.current;
+
   return loading ? null : (
     <RefreshingScroll refreshFn={refreshFn} loading={loading}>
       <SwiperContainer>
         <DataContainer>
-          <Text>{currentData.current.weather[0].main}</Text>
-          <Text>{currentData.current.temp}</Text>
-          <Text>{currentData.current.weather[0].description}</Text>
+          <Text>{currentHeader.weather[0].main}</Text>
+          <Text>{currentHeader.temp}</Text>
+          <Text>{currentHeader.weather[0].description}</Text>
         </DataContainer>
       </SwiperContainer>
     </RefreshingScroll>
