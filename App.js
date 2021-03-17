@@ -9,6 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import Stack from "./Navigation/Stack";
 import axios from "axios";
 import { getWeather } from "./API";
+import AntIcon from "react-native-vector-icons/AntDesign";
 
 const cacheImages = (images) =>
   images.map((image) => {
@@ -29,7 +30,7 @@ export default function App() {
       require("./assets/splash.png"),
     ]);
 
-    const fonts = cacheFonts([Ionicons.font, AntDesign.font]);
+    const fonts = cacheFonts([Ionicons.font, AntIcon.font, AntDesign.font]);
 
     return Promise.all([...images, ...fonts]);
   };

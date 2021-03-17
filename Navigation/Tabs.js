@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { Ionicons, Anticon, AntDesign } from "@expo/vector-icons";
 import Today from "../Screen/Today/TodayBG";
 import Forecast from "../Screen/Forecast/ForecastBG";
 import Past from "../Screen/Past";
@@ -25,16 +25,16 @@ export default ({ navigation, route }) => {
           let iconName;
 
           if (route.name === "오늘") {
-            iconName = "smileo";
+            iconName = "beer-sharp";
           } else if (route.name === "미래") {
-            iconName = "linechart";
+            iconName = "bicycle";
           } else if (route.name === "과거") {
-            iconName = "profile";
+            iconName = "bluetooth";
           } else if (route.name === "설정") {
-            iconName = "setting";
+            iconName = "boat";
           }
           return (
-            <AntDesign
+            <Ionicons
               name={iconName}
               size={26}
               color={focused ? "skyblue" : "grey"}

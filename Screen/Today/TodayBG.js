@@ -5,21 +5,20 @@ import { getWeather } from "../../API";
 import TodayUIUX from "./TodayUIUX";
 
 export default () => {
-  const [isReady, setIsReady] = useState(false);
   const [currentDataState, setCurrentDataState] = useState({
-    currentData: [],
+    loading: true,
+    currentData: {},
     currentDataError: null,
   });
 
   const getCurrentData = async () => {
     const [currentData, currentDataError] = await getWeather();
-    setCurrentDataState({ currentData, currentDataError });
-    setIsReady(true);
+    setCurrentDataState({ loading: false, currentData, currentDataError });
   };
 
   useEffect(() => {
     getCurrentData();
   }, []);
 
-  return isReady ? <TodayUIUX {...currentDataState} /> : null;
+  return <TodayUIUX refreshFn={getCurrentData} {...currentDataState} />;
 };
