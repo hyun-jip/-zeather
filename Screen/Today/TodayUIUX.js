@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Dimensions, Text, View } from "react-native";
 import SwiperContainer from "../../Component/SwiperContainer";
 import RefreshingScroll from "../../Component/RefreshingScroll";
 import styled from "styled-components/native";
 import { formatTime, formatSunTime, formatSunAMPM } from "../../Util";
-import HourlyUIUX from "../Hourly/HourlyUIUX";
+import { useNavigation } from "@react-navigation/core";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
+
+const CenterAlign = styled.View`
+  margin-top: 40px;
+  align-items: center;
+`;
 
 const TodayContainer = styled.View`
   margin-top: 20px;
@@ -101,6 +107,12 @@ const AMPM = styled.Text`
 
 export default ({ refreshFn, loading, currentData }) => {
   const currentHeader = currentData.current;
+  const navigation = useNavigation();
+  const gotoHourly = () => {
+    navigation.navigate("Hourly");
+  };
+
+  useLayoutEffect(() => navigation.setOptions({ headerTitleAlign: "center" }));
 
   return loading ? null : (
     <RefreshingScroll refreshFn={refreshFn} loading={loading}>
@@ -164,7 +176,11 @@ export default ({ refreshFn, loading, currentData }) => {
           {formatTime(currentHeader.dt * 1000)} 현재위치 기준
         </TimeStamp>
       </LineCenter>
-      <HourlyUIUX></HourlyUIUX>
+      <CenterAlign>
+        <TouchableOpacity onPress={gotoHourly}>
+          <Text>detail</Text>
+        </TouchableOpacity>
+      </CenterAlign>
     </RefreshingScroll>
   );
 };
