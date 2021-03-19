@@ -4,8 +4,7 @@ import SwiperContainer from "../../Component/SwiperContainer";
 import RefreshingScroll from "../../Component/RefreshingScroll";
 import styled from "styled-components/native";
 import { formatTime, formatSunTime, formatSunAMPM } from "../../Util";
-
-import Hourly from "../Hourly/Hourly";
+import HourlyUIUX from "../Hourly/HourlyUIUX";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
@@ -165,7 +164,7 @@ export default ({ refreshFn, loading, currentData }) => {
           {formatTime(currentHeader.dt * 1000)} 현재위치 기준
         </TimeStamp>
       </LineCenter>
-      <Hourly></Hourly>
+      <HourlyUIUX></HourlyUIUX>
     </RefreshingScroll>
   );
 };

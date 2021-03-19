@@ -9,7 +9,7 @@ const CenterAlign = styled.View`
   align-items: center;
 `;
 
-const Hourly = () => {
+const HourlyUIUX = () => {
   const navigation = useNavigation();
   const gotoHourly = () => {
     navigation.navigate("Hourly");
@@ -25,5 +25,4 @@ const Hourly = () => {
     </CenterAlign>
   );
 };
-
-export default Hourly;
+export default HourlyUIUX;
