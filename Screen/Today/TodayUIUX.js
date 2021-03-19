@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Dimensions, Text, View } from "react-native";
 import SwiperContainer from "../../Component/SwiperContainer";
 import RefreshingScroll from "../../Component/RefreshingScroll";
 import styled from "styled-components/native";
-import { loadAsync } from "expo-font";
-import { Ionicons } from "@expo/vector-icons";
+import { formatTime, formatSunTime, formatSunAMPM } from "../../Util";
+
+import Hourly from "../Hourly/Hourly";
+
+const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const TodayContainer = styled.View`
   margin-top: 20px;
@@ -17,23 +20,37 @@ const TempContainer = styled.View`
   align-items: baseline;
 `;
 
+const STContainer = styled.View`
+  align-items: baseline;
+`;
+
 const RainSnowContainer = styled.View`
-  background-color: green;
+  margin-top: 20px;
+  width: 100%;
+  align-items: center;
 `;
 
 const HumidContainer = styled.View`
-  background-color: green;
+  margin-top: 20px;
+  width: 100%;
+  align-items: center;
 `;
 
 const CloudContainer = styled.View`
-  background-color: green;
+  margin-top: 20px;
+  width: 100%;
+  align-items: center;
 `;
 const SuntimeContainer = styled.View`
-  background-color: green;
+  margin-top: 20px;
+  width: 100%;
+  align-items: center;
 `;
 
 const WindyContainer = styled.View`
-  background-color: green;
+  margin-top: 20px;
+  width: 100%;
+  align-items: center;
 `;
 
 const IconText = styled.Text`
@@ -44,8 +61,43 @@ const NumText = styled.Text`
 `;
 
 const CText = styled.Text`
-  font-size: 40px;
+  font-size: 50px;
   padding-bottom: 13px;
+`;
+
+const Description = styled.Text`
+  font-size: 26px;
+`;
+
+const Line = styled.View`
+  background-color: black;
+  height: 1.5px;
+  width: ${WIDTH / 3}px;
+  margin-bottom: 20px;
+`;
+
+const LineCenter = styled.View`
+  align-items: center;
+`;
+
+const AMPMContainer = styled.View`
+  flex-direction: row;
+  align-items: baseline;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const TimeStamp = styled.Text`
+  font-size: 17px;
+`;
+
+const Suntime = styled.Text`
+  font-size: 50px;
+`;
+
+const AMPM = styled.Text`
+  font-size: 20px;
+  padding-bottom: 5px;
 `;
 
 export default ({ refreshFn, loading, currentData }) => {
@@ -55,17 +107,65 @@ export default ({ refreshFn, loading, currentData }) => {
     <RefreshingScroll refreshFn={refreshFn} loading={loading}>
       <SwiperContainer>
         <TodayContainer>
-          <Ionicons name="sunny" />
+          <IconText>🌞</IconText>
           <TempContainer>
             <NumText>{Math.round(currentHeader.temp)}</NumText>
             <CText>℃</CText>
           </TempContainer>
-          <Text>{currentHeader.weather[0].description}</Text>
+          <Description>{currentHeader.weather[0].description}</Description>
         </TodayContainer>
         <RainSnowContainer>
-          <Text>{currentHeader.humidity}</Text>
+          <IconText>☔</IconText>
+          <TempContainer>
+            <NumText>{currentHeader.rain || 0}</NumText>
+            <CText>㎜</CText>
+          </TempContainer>
+          <Description>강수/강설</Description>
         </RainSnowContainer>
+        <HumidContainer>
+          <IconText>💧</IconText>
+          <TempContainer>
+            <NumText>{currentHeader.humidity}</NumText>
+            <CText>%</CText>
+          </TempContainer>
+          <Description>습도</Description>
+        </HumidContainer>
+        <CloudContainer>
+          <IconText>☁</IconText>
+          <TempContainer>
+            <NumText>{currentHeader.clouds}</NumText>
+            <CText>%</CText>
+          </TempContainer>
+          <Description>구름</Description>
+        </CloudContainer>
+        <SuntimeContainer>
+          <IconText>🌅</IconText>
+          <STContainer>
+            <AMPMContainer>
+              <Suntime>{formatSunTime(currentHeader.sunrise)}</Suntime>
+              <AMPM>{formatSunAMPM(currentHeader.sunrise)}</AMPM>
+              <Suntime> {formatSunTime(currentHeader.sunset)}</Suntime>
+              <AMPM>{formatSunAMPM(currentHeader.sunset)}</AMPM>
+            </AMPMContainer>
+          </STContainer>
+          <Description>일출/일몰</Description>
+        </SuntimeContainer>
+        <WindyContainer>
+          <IconText>🌬</IconText>
+          <TempContainer>
+            <NumText>{Math.round(currentHeader.wind_speed * 10) / 10}</NumText>
+            <CText>㎧</CText>
+          </TempContainer>
+          <Description>바람</Description>
+        </WindyContainer>
       </SwiperContainer>
+      <LineCenter>
+        <Line></Line>
+        <TimeStamp>
+          {formatTime(currentHeader.dt * 1000)} 현재위치 기준
+        </TimeStamp>
+      </LineCenter>
+      <Hourly></Hourly>
     </RefreshingScroll>
   );
 };
