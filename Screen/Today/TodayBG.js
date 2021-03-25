@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
 import { useEffect } from "react/cjs/react.development";
 import { getWeather } from "../../API";
 import TodayUIUX from "./TodayUIUX";
@@ -7,7 +6,7 @@ import TodayUIUX from "./TodayUIUX";
 export default () => {
   const [currentDataState, setCurrentDataState] = useState({
     loading: true,
-    currentData: {},
+    currentData: [],
     currentDataError: null,
   });
 

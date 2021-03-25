@@ -1,5 +1,22 @@
-import { useNavigation } from "@react-navigation/core";
-import React, { useLayoutEffect } from "react";
-import { View, Text } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import { getWeather } from "../../API";
+import HourlyUIUX from "./HourlyUIUX";
+
+export default () => {
+  const [hourlyDataState, setHourlyDataState] = useState({
+    loading: true,
+    hourlyData: [],
+    hourlyDataError: null,
+  });
+
+  const getHourlyData = async () => {
+    const [hourlyData, hourlyDataError] = await getWeather();
+    setHourlyDataState({ loading: false, hourlyData, hourlyDataError });
+  };
+
+  useEffect(() => {
+    getHourlyData();
+  }, []);
+
+  return <HourlyUIUX refreshFn={getHourlyData} {...hourlyDataState} />;
+};

@@ -16,3 +16,9 @@ export const formatSunAMPM = (time) => {
 
   return AMPM;
 };
+
+export const formatHour = (time) => {
+  const unix_hour = moment.unix(time + 32400).format("h");
+
+  return unix_hour;
+};
