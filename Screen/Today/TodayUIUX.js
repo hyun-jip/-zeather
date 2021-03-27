@@ -15,6 +15,7 @@ const BGColor = styled.View`
   width: 100%;
   height: 100%;
 `;
+
 const CenterAlign = styled.View`
   margin-top: 40px;
   align-items: center;
