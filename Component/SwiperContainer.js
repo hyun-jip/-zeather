@@ -9,7 +9,6 @@ const Container = styled.View`
   width: 100%;
   height: ${HEIGHT / 2.3}px;
   margin-top: 60px;
-  background-color: blue;
 `;
 
 const SwiperContainer = ({ children }) => (

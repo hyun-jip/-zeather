@@ -6,13 +6,19 @@ import TodayUIUX from "./TodayUIUX";
 export default () => {
   const [currentDataState, setCurrentDataState] = useState({
     loading: true,
+    main: null,
     currentData: [],
     currentDataError: null,
   });
 
   const getCurrentData = async () => {
     const [currentData, currentDataError] = await getWeather();
-    setCurrentDataState({ loading: false, currentData, currentDataError });
+    setCurrentDataState({
+      loading: false,
+      main: currentData.current.weather[0].main,
+      currentData,
+      currentDataError,
+    });
   };
 
   useEffect(() => {
