@@ -138,7 +138,11 @@ export default ({ refreshFn, loading, currentData, main }) => {
             <RainSnowContainer>
               <IconText>☔</IconText>
               <TempContainer>
-                <NumText>{currentHeader.rain || 0}</NumText>
+                <NumText>
+                  {currentHeader.rain?.["1h"] ||
+                    currentHeader.snow?.["1h"] ||
+                    0}
+                </NumText>
                 <CText>㎜</CText>
               </TempContainer>
               <Description>강수/강설</Description>

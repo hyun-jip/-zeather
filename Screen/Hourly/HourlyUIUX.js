@@ -45,7 +45,6 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
 
   // console.log(hourlyData);
 
-
   const hourlyHeader = hourlyData.hourly;
 
   return loading ? null : (

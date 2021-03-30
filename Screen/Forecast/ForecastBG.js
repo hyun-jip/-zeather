@@ -1,28 +1,26 @@
-import React, { useState } from "react";
-import { Text, View } from "react-native";
-import { useEffect } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import { getWeather } from "../../API";
+import ForecastUIUX from "./ForecastUIUX";
 
 export default () => {
-  const [isReady, setIsReady] = useState(false);
   const [futureDataState, setFutureDataState] = useState({
+    loading: true,
     futureData: [],
     futureDataError: null,
   });
 
   const getFutureData = async () => {
     const [futureData, futureDataError] = await getWeather();
-    setFutureDataState({ futureData, futureDataError });
-    setIsReady(true);
+    setFutureDataState({
+      loading: false,
+      futureData,
+      futureDataError,
+    });
   };
 
   useEffect(() => {
     getFutureData();
   }, []);
 
-  return isReady ? (
-    <View>
-      <Text>{futureDataState.futureData.current.weather[0].description}</Text>
-    </View>
-  ) : null;
+  return <ForecastUIUX refreshFn={getFutureData} {...futureDataState} />;
 };

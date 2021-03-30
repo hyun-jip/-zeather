@@ -1,12 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, Anticon, AntDesign } from "@expo/vector-icons";
-import Today from "../Screen/Today/TodayBG";
-import Forecast from "../Screen/Forecast/ForecastBG";
-import Past from "../Screen/Past";
 import Settings from "../Screen/Settings";
 import { useLayoutEffect } from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import TodayBG from "../Screen/Today/TodayBG";
+import PastBG from "../Screen/Past/PastBG";
+import ForecastBG from "../Screen/Forecast/ForecastBG";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,9 +43,9 @@ export default ({ navigation, route }) => {
         },
       })}
     >
-      <Tab.Screen name="오늘" component={Today} />
-      <Tab.Screen name="미래" component={Forecast} />
-      <Tab.Screen name="과거" component={Past} />
+      <Tab.Screen name="오늘" component={TodayBG} />
+      <Tab.Screen name="미래" component={ForecastBG} />
+      <Tab.Screen name="과거" component={PastBG} />
       <Tab.Screen name="설정" component={Settings} />
     </Tab.Navigator>
   );
