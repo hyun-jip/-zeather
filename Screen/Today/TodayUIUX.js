@@ -17,11 +17,6 @@ const BGColor = styled.View`
   height: 100%;
 `;
 
-const CenterAlign = styled.View`
-  margin-top: 40px;
-  align-items: center;
-`;
-
 const TodayContainer = styled.View`
   margin-top: 20px;
   width: 100%;
@@ -115,12 +110,6 @@ const AMPM = styled.Text`
 
 export default ({ refreshFn, loading, currentData, main }) => {
   const currentHeader = currentData.current;
-  const navigation = useNavigation();
-  const gotoHourly = () => {
-    navigation.navigate("Hourly");
-  };
-
-  useLayoutEffect(() => navigation.setOptions({ headerTitleAlign: "center" }));
 
   return loading ? null : (
     <LinearGradient colors={weatherOptions[main].gradient}>
@@ -192,11 +181,6 @@ export default ({ refreshFn, loading, currentData, main }) => {
               {formatTime(currentHeader.dt * 1000)} 현재위치 기준
             </TimeStamp>
           </LineCenter>
-          <CenterAlign>
-            <TouchableOpacity onPress={gotoHourly}>
-              <Text>detail</Text>
-            </TouchableOpacity>
-          </CenterAlign>
         </RefreshingScroll>
       </BGColor>
     </LinearGradient>

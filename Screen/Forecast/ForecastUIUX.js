@@ -1,10 +1,11 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useLayoutEffect } from "react";
 import { Dimensions, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import styled from "styled-components";
 import RefreshingScroll from "../../Component/RefreshingScroll";
 import SmallSwiperContainer from "../../Component/SmallSwiperContainer";
-import { formatFutureDate } from "../../Util";
+import { formatFutureDate, formatFutureDay } from "../../Util";
 import { weatherOptions } from "../../Weather";
 
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
@@ -20,6 +21,10 @@ const SemiOpacity = styled.View`
 
 const EmptySpace = styled.View`
   height: 80px;
+`;
+
+const EmptySmallSpace = styled.View`
+  height: 50px;
 `;
 
 const DailyMainContainer1 = styled.View`
@@ -65,6 +70,25 @@ const Line = styled.View`
   margin-top: 30px;
 `;
 
+const WeeklyView = styled.View`
+  height: 120px;
+  flex-direction: row;
+`;
+
+const ColumnView = styled.View`
+  align-items: center;
+  justify-content: space-around;
+  width: ${WIDTH / 8};
+`;
+
+const LeftView = styled.View`
+  width: ${WIDTH / 7}px;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 20px;
+  margin-right: 10px;
+`;
+
 const Icon = styled.Text`
   font-size: 100px;
 `;
@@ -77,9 +101,16 @@ const MINMAX = styled.Text`
   font-size: 20px;
 `;
 
-export default ({ refreshFn, loading, futureData, main }) => {
+const WeeklyText = styled.Text`
+  font-size: 22px;
+  margin-left: 18px;
+`;
+
+export default ({ refreshFn, loading, futureData }) => {
   const navigation = useNavigation();
   useLayoutEffect(() => navigation.setOptions({ headerTitleAlign: "center" }));
+
+  console.log(futureData);
 
   return loading ? null : (
     <BGcolor>
@@ -118,6 +149,25 @@ export default ({ refreshFn, loading, futureData, main }) => {
               </DailyMainContainer1>
             ))}
           </SmallSwiperContainer>
+        </SemiOpacity>
+        <EmptySmallSpace></EmptySmallSpace>
+        <WeeklyText>WEEKLY</WeeklyText>
+
+        <SemiOpacity>
+          <WeeklyView>
+            <LeftView>
+              <MINMAX>DAY</MINMAX>
+              <MINMAX>ICON</MINMAX>
+              <MINMAX>℃</MINMAX>
+            </LeftView>
+            {futureData.daily.slice(0, 6).map((data) => (
+              <ColumnView>
+                <MINMAX>{formatFutureDay(data.dt)}</MINMAX>
+                <MINMAX>{weatherOptions[data.weather[0].main].icon}</MINMAX>
+                <MINMAX>{Math.round(data.temp.day)}</MINMAX>
+              </ColumnView>
+            ))}
+          </WeeklyView>
         </SemiOpacity>
       </RefreshingScroll>
     </BGcolor>

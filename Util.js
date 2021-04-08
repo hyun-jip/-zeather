@@ -32,3 +32,9 @@ export const formatFutureDate = (time) => {
   const unix_sumFutureDate = `${unix_month}월 ${unix_day}일 ${weekdayArr[unix_weekday]}요일`;
   return unix_sumFutureDate;
 };
+
+export const formatFutureDay = (time) => {
+  const unix_Day = moment.unix(time + 32400).format("D");
+
+  return unix_Day;
+};
