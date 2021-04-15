@@ -114,8 +114,7 @@ export default ({ refreshFn, loading, currentData, main }) => {
     <LinearGradient colors={weatherOptions[main].gradient}>
       <BGColor>
         <RefreshingScroll refreshFn={refreshFn} loading={loading}>
-          <SwiperContainer>
-            <Text>{currentHeader.temp}</Text>
+          <SwiperContainer key={currentHeader.dt}>
             <TodayContainer>
               <IconText>{weatherOptions[main].icon}</IconText>
               <TempContainer>
