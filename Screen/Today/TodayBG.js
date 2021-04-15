@@ -26,7 +26,7 @@ export default ({ coordsState }) => {
 
   useEffect(() => {
     getCurrentData();
-    console.log(coordsState.latitude);
+    // console.log(coordsState.latitude);
   }, [coordsState]);
 
   return <TodayUIUX refreshFn={getCurrentData} {...currentDataState} />;

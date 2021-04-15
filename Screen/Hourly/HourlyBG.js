@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getWeather } from "../../API";
 import HourlyUIUX from "./HourlyUIUX";
 
-export default () => {
+export default ({ coordsState }) => {
   const [hourlyDataState, setHourlyDataState] = useState({
     loading: true,
     main: null,
@@ -11,7 +11,10 @@ export default () => {
   });
 
   const getHourlyData = async () => {
-    const [hourlyData, hourlyDataError] = await getWeather();
+    const [hourlyData, hourlyDataError] = await getWeather(
+      coordsState.latitude,
+      coordsState.longitude
+    );
     setHourlyDataState({
       loading: false,
       main: hourlyData.current.weather[0].main,
@@ -22,7 +25,7 @@ export default () => {
 
   useEffect(() => {
     getHourlyData();
-  }, []);
+  }, [coordsState]);
 
   return <HourlyUIUX refreshFn={getHourlyData} {...hourlyDataState} />;
 };

@@ -55,7 +55,16 @@ export default ({ navigation, route }) => {
         name="지금"
         children={() => <TodayBG coordsState={coordsState} />}
       />
-      <Tab.Screen name="오늘" component={HourlyBG} />
+      <Tab.Screen
+        name="오늘"
+        children={() => (
+          <HourlyBG
+            aa={coordsState.latitude}
+            coordsState={coordsState}
+            setCoordsState={setCoordsState}
+          />
+        )}
+      />
       <Tab.Screen name="미래" component={ForecastBG} />
       <Tab.Screen
         name="설정"

@@ -110,12 +110,12 @@ const AMPM = styled.Text`
 
 export default ({ refreshFn, loading, currentData, main }) => {
   const currentHeader = currentData.current;
-
   return loading ? null : (
     <LinearGradient colors={weatherOptions[main].gradient}>
       <BGColor>
         <RefreshingScroll refreshFn={refreshFn} loading={loading}>
           <SwiperContainer>
+            <Text>{currentHeader.temp}</Text>
             <TodayContainer>
               <IconText>{weatherOptions[main].icon}</IconText>
               <TempContainer>

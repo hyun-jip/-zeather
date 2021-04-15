@@ -12,13 +12,11 @@ const Container = styled.View`
 `;
 
 const SwiperContainer = ({ children }) => (
-  <>
-    <Container>
-      <Swiper controlsEnabled={false} loop timeout={3}>
-        {children}
-      </Swiper>
-    </Container>
-  </>
+  <Container>
+    <Swiper controlsEnabled={false} loop timeout={3}>
+      {children}
+    </Swiper>
+  </Container>
 );
 
 export default SwiperContainer;
