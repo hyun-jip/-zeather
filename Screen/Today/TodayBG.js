@@ -3,7 +3,7 @@ import { useEffect } from "react/cjs/react.development";
 import { getWeather } from "../../API";
 import TodayUIUX from "./TodayUIUX";
 
-export default () => {
+export default ({ coordsState }) => {
   const [currentDataState, setCurrentDataState] = useState({
     loading: true,
     main: null,
@@ -12,7 +12,10 @@ export default () => {
   });
 
   const getCurrentData = async () => {
-    const [currentData, currentDataError] = await getWeather();
+    const [currentData, currentDataError] = await getWeather(
+      coordsState.latitude,
+      coordsState.longitude
+    );
     setCurrentDataState({
       loading: false,
       main: currentData.current.weather[0].main,
@@ -23,7 +26,8 @@ export default () => {
 
   useEffect(() => {
     getCurrentData();
-  }, []);
+    console.log(coordsState.latitude);
+  }, [coordsState]);
 
   return <TodayUIUX refreshFn={getCurrentData} {...currentDataState} />;
 };

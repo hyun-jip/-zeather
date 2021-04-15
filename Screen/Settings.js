@@ -4,6 +4,7 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 import RefreshingScroll from "../Component/RefreshingScroll";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Tabs from "../Navigation/Tabs";
 
 const styles = StyleSheet.create({
   container: {
@@ -18,16 +19,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => {
-  const [coordsState, setCoordsState] = useState({
+export default ({ setCoordsState, aa }) => {
+  const [currentCoordsState, setCurrentCoordsState] = useState({
     loading: true,
-    latitude: null,
-    longitude: null,
-  });
-
-  const [weatherCoordsState, setWeatherCoordsState] = useState({
-    weatherLatitude: null,
-    weatherLongitude: null,
+    currentLatitude: null,
+    currentLongitude: null,
   });
 
   const getLocation = async () => {
@@ -36,10 +32,10 @@ export default () => {
       const {
         coords: { latitude, longitude },
       } = await Location.getCurrentPositionAsync();
-      setCoordsState({
+      setCurrentCoordsState({
         loading: false,
-        latitude,
-        longitude,
+        currentLatitude: latitude,
+        currentLongitude: longitude,
       });
     } catch (error) {
       Alert.alert("Can't find you.", "So sad");
@@ -55,27 +51,30 @@ export default () => {
     getLocation();
   }, []);
 
-  return coordsState.loading ? null : (
-    <RefreshingScroll refreshFn={getLocation} loading={coordsState.loading}>
+  return currentCoordsState.loading ? null : (
+    <RefreshingScroll
+      refreshFn={getLocation}
+      loading={currentCoordsState.loading}
+    >
       <View>
         <TouchableOpacity
           onPress={() =>
-            setWeatherCoordsState({
-              weatherLatitude: coordsState.latitude,
-              weatherLongitude: coordsState.longitude,
+            setCoordsState({
+              latitude: currentCoordsState.currentLatitude,
+              longitude: currentCoordsState.currentLongitude,
             })
           }
         >
           <Text>현재 위치로 설정</Text>
+          <Text>{aa}</Text>
         </TouchableOpacity>
-
         <MapView
           style={styles.map}
           showsUserLocation={true}
           showsMyLocationButton={true}
           initialRegion={{
-            latitude: coordsState.latitude,
-            longitude: coordsState.longitude,
+            latitude: currentCoordsState.currentLatitude,
+            longitude: currentCoordsState.currentLongitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
