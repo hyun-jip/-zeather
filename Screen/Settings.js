@@ -40,8 +40,6 @@ export default ({ coordsState, setCoordsState, aa, bb }) => {
           Lat || 37.35446511617107
         },${Long || 126.96066018193959}&key=${Google_API_KEY}&language=ko`
       );
-      const geoCodeName = data.results[0].address_components[1].short_name;
-
       return data;
     } catch (e) {
       console.log(e);
