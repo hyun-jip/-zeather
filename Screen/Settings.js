@@ -6,6 +6,7 @@ import RefreshingScroll from "../Component/RefreshingScroll";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Tabs from "../Navigation/Tabs";
 import axios from "axios";
+import { geocodeAsync } from "expo-location";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
 
 const Google_API_KEY = "AIzaSyAqe6s7YjvCTBbZSaYWayULASiO180dHCM";
 
-export default ({ coordsState, setCoordsState, aa }) => {
+export default ({ coordsState, setCoordsState, aa, bb }) => {
   const [currentCoordsState, setCurrentCoordsState] = useState({
     loading: true,
     currentLatitude: null,
@@ -39,28 +40,31 @@ export default ({ coordsState, setCoordsState, aa }) => {
           Lat || 37.35446511617107
         },${Long || 126.96066018193959}&key=${Google_API_KEY}&language=ko`
       );
-      console.log(data.results[1].formatted_address);
-      return [data, null];
+      const geoCodeName = data.results[0].address_components[1].short_name;
+
+      return data;
     } catch (e) {
       console.log(e);
-      return [null, e];
+      return e;
     }
+  };
+
+  const setCodeName = async () => {
+    const geocodeAPI = await getGeocodeName(
+      currentCoordsState.markers.latitude,
+      currentCoordsState.markers.longitude
+    );
+    setCoordsState({
+      latitude: currentCoordsState.markers.latitude,
+      longitude: currentCoordsState.markers.longitude,
+      geocodeAPI,
+      geoCodeName: geocodeAPI.results[0].address_components[1].short_name,
+    });
   };
 
   return coordsState.loading ? null : (
     <View>
-      <TouchableOpacity
-        onPress={() => {
-          setCoordsState({
-            latitude: currentCoordsState.markers.latitude,
-            longitude: currentCoordsState.markers.longitude,
-          });
-          getGeocodeName(
-            currentCoordsState.markers.latitude,
-            currentCoordsState.markers.longitude
-          );
-        }}
-      >
+      <TouchableOpacity onPress={setCodeName}>
         <Text>마커 위치로 설정</Text>
         <Text>{aa}</Text>
       </TouchableOpacity>

@@ -108,7 +108,7 @@ const AMPM = styled.Text`
   padding-bottom: 5px;
 `;
 
-export default ({ refreshFn, loading, currentData, main }) => {
+export default ({ refreshFn, loading, currentData, main, geoCodeName }) => {
   const currentHeader = currentData.current;
   return loading ? null : (
     <LinearGradient colors={weatherOptions[main].gradient}>
@@ -177,7 +177,9 @@ export default ({ refreshFn, loading, currentData, main }) => {
           <LineCenter>
             <Line></Line>
             <TimeStamp>
-              {formatTime(currentHeader.dt * 1000)} 현재위치 기준
+              {`${formatTime(currentHeader.dt * 1000)} ${
+                geoCodeName || "현재위치"
+              } 기준`}
             </TimeStamp>
           </LineCenter>
         </RefreshingScroll>

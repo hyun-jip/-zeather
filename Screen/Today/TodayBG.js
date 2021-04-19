@@ -29,5 +29,11 @@ export default ({ coordsState }) => {
     // console.log(coordsState.latitude);
   }, [coordsState]);
 
-  return <TodayUIUX refreshFn={getCurrentData} {...currentDataState} />;
+  return (
+    <TodayUIUX
+      refreshFn={getCurrentData}
+      {...currentDataState}
+      geoCodeName={coordsState.geoCodeName}
+    />
+  );
 };

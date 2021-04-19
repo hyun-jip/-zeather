@@ -19,6 +19,8 @@ export default ({ navigation, route }) => {
     loading: true,
     latitude: null,
     longitude: null,
+    geoCodeName: null,
+    geocodeAPI: [],
   });
 
   const setLATLONG = (LAT, LONG) =>
@@ -27,6 +29,7 @@ export default ({ navigation, route }) => {
   useLayoutEffect(() => {
     const title = getHeaderName(route);
     navigation.setOptions({ title, headerTitleAlign: "center" });
+    console.log(coordsState.geoCodeName);
   }, [navigation, route]);
 
   const getLocation = async () => {
@@ -94,6 +97,7 @@ export default ({ navigation, route }) => {
         children={() => (
           <Settings
             aa={coordsState.latitude}
+            bb={coordsState.geoCodeName}
             coordsState={coordsState}
             setCoordsState={setCoordsState}
           />
