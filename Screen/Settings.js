@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Dimensions, Text, View, StyleSheet, Alert } from "react-native";
-import MapView from "react-native-maps";
-import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
+import Geocode from "react-geocode";
 import RefreshingScroll from "../Component/RefreshingScroll";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Tabs from "../Navigation/Tabs";
+import axios from "axios";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,67 +20,68 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ({ setCoordsState, aa }) => {
+const Google_API_KEY = "AIzaSyAqe6s7YjvCTBbZSaYWayULASiO180dHCM";
+
+export default ({ coordsState, setCoordsState, aa }) => {
   const [currentCoordsState, setCurrentCoordsState] = useState({
     loading: true,
     currentLatitude: null,
     currentLongitude: null,
+    markers: null,
   });
 
-  const getLocation = async () => {
+  const getGeocodeName = async (Lat, Long) => {
     try {
-      await Location.requestPermissionsAsync();
-      const {
-        coords: { latitude, longitude },
-      } = await Location.getCurrentPositionAsync();
-      setCurrentCoordsState({
-        loading: false,
-        currentLatitude: latitude,
-        currentLongitude: longitude,
-      });
-    } catch (error) {
-      Alert.alert("Can't find you.", "So sad");
+      console.log(Lat);
+      console.log(Long);
+      const { data } = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
+          Lat || 37.35446511617107
+        },${Long || 126.96066018193959}&key=${Google_API_KEY}&language=ko`
+      );
+      console.log(data.results[1].formatted_address);
+      return [data, null];
+    } catch (e) {
+      console.log(e);
+      return [null, e];
     }
   };
 
-  const showLocation = (latitude, longitude) => {
-    console.log(latitude);
-    console.log(longitude);
-  };
-
-  useEffect(() => {
-    getLocation();
-  }, []);
-
-  return currentCoordsState.loading ? null : (
-    <RefreshingScroll
-      refreshFn={getLocation}
-      loading={currentCoordsState.loading}
-    >
-      <View>
-        <TouchableOpacity
-          onPress={() =>
-            setCoordsState({
-              latitude: currentCoordsState.currentLatitude,
-              longitude: currentCoordsState.currentLongitude,
-            })
-          }
-        >
-          <Text>현재 위치로 설정</Text>
-          <Text>{aa}</Text>
-        </TouchableOpacity>
-        <MapView
-          style={styles.map}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-          initialRegion={{
-            latitude: currentCoordsState.currentLatitude,
-            longitude: currentCoordsState.currentLongitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-        ></MapView>
-      </View>
-    </RefreshingScroll>
+  return coordsState.loading ? null : (
+    <View>
+      <TouchableOpacity
+        onPress={() => {
+          setCoordsState({
+            latitude: currentCoordsState.markers.latitude,
+            longitude: currentCoordsState.markers.longitude,
+          });
+          getGeocodeName(
+            currentCoordsState.markers.latitude,
+            currentCoordsState.markers.longitude
+          );
+        }}
+      >
+        <Text>마커 위치로 설정</Text>
+        <Text>{aa}</Text>
+      </TouchableOpacity>
+      <MapView
+        style={styles.map}
+        showsUserLocation={true}
+        showsMyLocationButton={true}
+        initialRegion={{
+          latitude: coordsState.latitude,
+          longitude: coordsState.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        onPress={(e) => {
+          setCurrentCoordsState({ markers: e.nativeEvent.coordinate });
+        }}
+      >
+        {currentCoordsState.markers && (
+          <Marker coordinate={currentCoordsState.markers} />
+        )}
+      </MapView>
+    </View>
   );
 };

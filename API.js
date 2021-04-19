@@ -8,10 +8,8 @@ export const getWeather = async (LAT, LONG) => {
     console.log(LAT);
     console.log(LONG);
     const { data } = await axios.get(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${
-        LAT || 33.441792
-      }&lon=${
-        LONG || -94.037689
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${LAT || 0}&lon=${
+        LONG || 0
       }&exclude={part}&appid=${API_KEY}&lang=kr&units=metric`
     );
     return [data || result, null];
