@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, Text, View, StyleSheet, Alert } from "react-native";
+import { Dimensions, Text, View, StyleSheet, Button } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import Geocode from "react-geocode";
-import RefreshingScroll from "../Component/RefreshingScroll";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Tabs from "../Navigation/Tabs";
+import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
-import { geocodeAsync } from "expo-location";
+
+import Geocoder from "react-native-geocoding";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,21 +12,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 50,
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    height: Dimensions.get("window").height * 0.7,
   },
 });
 
 const Google_API_KEY = "AIzaSyAqe6s7YjvCTBbZSaYWayULASiO180dHCM";
 
-export default ({ coordsState, setCoordsState, aa, bb }) => {
+export default ({ coordsState, setCoordsState, aa }) => {
   const [currentCoordsState, setCurrentCoordsState] = useState({
     loading: true,
     currentLatitude: null,
     currentLongitude: null,
     markers: null,
+    geocodeResult: null,
+  });
+
+  const [searchCoordsState, setSearchCoordsState] = useState({
+    latitude: null,
+    longitude: null,
   });
 
   const getGeocodeName = async (Lat, Long) => {
@@ -60,8 +65,47 @@ export default ({ coordsState, setCoordsState, aa, bb }) => {
     });
   };
 
+  const searchGeocode = async (keyword) => {
+    try {
+      Geocoder.init(Google_API_KEY, { language: "ko" });
+
+      const geocodeResult = await Geocoder.from(keyword);
+      //  const location = json.results[0].geometry.location;
+      setCurrentCoordsState({
+        currentLatitude: geocodeResult.results[0].geometry.location.lat,
+        currentLongitude: geocodeResult.results[0].geometry.location.lng,
+        geocodeResult,
+        markers: {
+          latitude: geocodeResult.results[0].geometry.location.lat,
+          longitude: geocodeResult.results[0].geometry.location.lng,
+        },
+      });
+    } catch (e) {
+      console.warn(error);
+    }
+  };
+
+  const [value, onChangeText] = useState("입력");
+
   return coordsState.loading ? null : (
     <View>
+      <TextInput
+        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
+        onChangeText={(text) => onChangeText(text)}
+        value={value}
+      />
+      <Button
+        title="검색"
+        onPress={() => {
+          searchGeocode(value);
+          <MapView
+            region={{
+              latitude: currentCoordsState.currentLatitude,
+              longitude: currentCoordsState.currentLongitude,
+            }}
+          />;
+        }}
+      />
       <TouchableOpacity onPress={setCodeName}>
         <Text>마커 위치로 설정</Text>
         <Text>{aa}</Text>
@@ -73,11 +117,18 @@ export default ({ coordsState, setCoordsState, aa, bb }) => {
         initialRegion={{
           latitude: coordsState.latitude,
           longitude: coordsState.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
+        }}
+        region={{
+          latitude: currentCoordsState.currentLatitude,
+          longitude: currentCoordsState.currentLongitude,
+          latitudeDelta: 0.005,
+          longitudeDelta: 0.005,
         }}
         onPress={(e) => {
           setCurrentCoordsState({ markers: e.nativeEvent.coordinate });
+          console.log(currentCoordsState.markers);
         }}
       >
         {currentCoordsState.markers && (
