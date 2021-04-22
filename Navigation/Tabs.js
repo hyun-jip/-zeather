@@ -84,20 +84,23 @@ export default ({ navigation, route }) => {
       <Tab.Screen
         name="오늘"
         children={() => (
-          <HourlyBG
-            aa={coordsState.latitude}
+          <HourlyBG coordsState={coordsState} setCoordsState={setCoordsState} />
+        )}
+      />
+      <Tab.Screen
+        name="미래"
+        children={() => (
+          <ForecastBG
             coordsState={coordsState}
             setCoordsState={setCoordsState}
           />
         )}
       />
-      <Tab.Screen name="미래" component={ForecastBG} />
       <Tab.Screen
         name="설정"
         children={() => (
           <Settings
             aa={coordsState.latitude}
-            bb={coordsState.geoCodeName}
             coordsState={coordsState}
             setCoordsState={setCoordsState}
           />

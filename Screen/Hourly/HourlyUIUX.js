@@ -16,8 +16,12 @@ const BGColor = styled.View`
   height: 100%;
 `;
 
+const SemiOpacity = styled.View`
+  background-color: rgba(255, 255, 255, 0.5);
+`;
+
 const EmptySpace = styled.View`
-  height: 130px;
+  height: 108px;
 `;
 
 const Vertical = styled.View`
@@ -29,8 +33,13 @@ const HourlyText = styled.Text`
   font-size: 30px;
 `;
 
+const HourlyMiddleText = styled.Text`
+  font-size: 25px;
+`;
+
 const HourlySmallText = styled.Text`
   font-size: 20px;
+  margin-bottom: 5px;
 `;
 
 const HourlySmallRedText = styled.Text`
@@ -53,6 +62,11 @@ const RowView = styled.View`
   flex-direction: row;
 `;
 
+const TitleText = styled.Text`
+  font-size: 22px;
+  margin-left: 18px;
+`;
+
 export default ({ refreshFn, loading, hourlyData, main }) => {
   const navigation = useNavigation();
   useLayoutEffect(() => navigation.setOptions({ headerTitleAlign: "center" }));
@@ -66,32 +80,37 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
       <BGColor>
         <RefreshingScroll refreshFn={refreshFn} loading={loading}>
           <EmptySpace></EmptySpace>
-          <RowView>
-            <LeftView>
-              <ColumnView>
-                <HourlySmallText></HourlySmallText>
-                <HourlyText></HourlyText>
-                <HourlySmallRedText>온도</HourlySmallRedText>
-                <HourlySmallRedText>풍속</HourlySmallRedText>
-                <HourlySmallRedText>구름</HourlySmallRedText>
-                <HourlySmallRedText>눈비</HourlySmallRedText>
-              </ColumnView>
-            </LeftView>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {hourlyHeader.slice(0, 24).map((data) => (
-                <Vertical>
-                  <ColumnView>
-                    <HourlySmallText>{formatHour(data.dt)}</HourlySmallText>
-                    <HourlyText>{weatherOptions[main].icon}</HourlyText>
-                    <HourlySmallText>{data.temp}</HourlySmallText>
-                    <HourlySmallText>{data.wind_speed}</HourlySmallText>
-                    <HourlySmallText>{data.clouds}</HourlySmallText>
-                    <HourlySmallText>{data.rain?.["1h"] || 0}</HourlySmallText>
-                  </ColumnView>
-                </Vertical>
-              ))}
-            </ScrollView>
-          </RowView>
+          <TitleText>Hourly</TitleText>
+          <SemiOpacity>
+            <RowView>
+              <LeftView>
+                <ColumnView>
+                  <HourlySmallText></HourlySmallText>
+                  <HourlyMiddleText></HourlyMiddleText>
+                  <HourlyMiddleText>🌡</HourlyMiddleText>
+                  <HourlyMiddleText>🌬</HourlyMiddleText>
+                  <HourlyMiddleText>☁</HourlyMiddleText>
+                  <HourlyMiddleText>☔</HourlyMiddleText>
+                </ColumnView>
+              </LeftView>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {hourlyHeader.slice(0, 24).map((data) => (
+                  <Vertical>
+                    <ColumnView>
+                      <HourlySmallText>{formatHour(data.dt)}</HourlySmallText>
+                      <HourlyText>{weatherOptions[main].icon}</HourlyText>
+                      <HourlySmallText>{data.temp}</HourlySmallText>
+                      <HourlySmallText>{data.wind_speed}</HourlySmallText>
+                      <HourlySmallText>{data.clouds}</HourlySmallText>
+                      <HourlySmallText>
+                        {data.rain?.["1h"] || 0}
+                      </HourlySmallText>
+                    </ColumnView>
+                  </Vertical>
+                ))}
+              </ScrollView>
+            </RowView>
+          </SemiOpacity>
         </RefreshingScroll>
       </BGColor>
     </LinearGradient>

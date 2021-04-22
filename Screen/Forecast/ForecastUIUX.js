@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useLayoutEffect } from "react";
 import { Dimensions, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -11,7 +12,6 @@ import { weatherOptions } from "../../Weather";
 const { width: WIDTH, height: HEIGHT } = Dimensions.get("window");
 
 const BGcolor = styled.View`
-  background-color: #f2e7e7;
   height: 100%;
 `;
 
@@ -106,70 +106,72 @@ const WeeklyText = styled.Text`
   margin-left: 18px;
 `;
 
-export default ({ refreshFn, loading, futureData }) => {
+export default ({ refreshFn, loading, futureData, main }) => {
   const navigation = useNavigation();
   useLayoutEffect(() => navigation.setOptions({ headerTitleAlign: "center" }));
 
   console.log(futureData);
 
   return loading ? null : (
-    <BGcolor>
-      <RefreshingScroll refreshFn={refreshFn} loading={loading}>
-        <EmptySpace></EmptySpace>
-        <SemiOpacity>
-          <SmallSwiperContainer>
-            {futureData.daily.map((data) => (
-              <DailyMainContainer1>
-                <DailyMainContainer2>
-                  <DailySubContainer1>
-                    <Icon>{weatherOptions[data.weather[0].main].icon}</Icon>
-                    <Temp>{Math.round(data.temp.day)}℃</Temp>
-                  </DailySubContainer1>
-                  <DailySubContainer1>
-                    <DailySubContainer4>
-                      <DailySubContainer2>
-                        <MINMAX>MIN</MINMAX>
-                        <MINMAX>{Math.round(data.temp.min)}</MINMAX>
-                      </DailySubContainer2>
-                      <DailySubContainer2>
-                        <MINMAX>MAX</MINMAX>
-                        <MINMAX>{Math.round(data.temp.max)}</MINMAX>
-                      </DailySubContainer2>
-                    </DailySubContainer4>
-                    <DailySubContainer3>
-                      <MINMAX>RAIN/SNOW</MINMAX>
-                      <MINMAX>
-                        {Math.round(data.rain || data.snow || 0)}mm
-                      </MINMAX>
-                    </DailySubContainer3>
-                  </DailySubContainer1>
-                </DailyMainContainer2>
-                <Line></Line>
-                <MINMAX>{formatFutureDate(data.dt)}</MINMAX>
-              </DailyMainContainer1>
-            ))}
-          </SmallSwiperContainer>
-        </SemiOpacity>
-        <EmptySmallSpace></EmptySmallSpace>
-        <WeeklyText>WEEKLY</WeeklyText>
+    <LinearGradient colors={weatherOptions[main].gradient}>
+      <BGcolor>
+        <RefreshingScroll refreshFn={refreshFn} loading={loading}>
+          <EmptySpace></EmptySpace>
+          <SemiOpacity>
+            <SmallSwiperContainer>
+              {futureData.daily.map((data) => (
+                <DailyMainContainer1>
+                  <DailyMainContainer2>
+                    <DailySubContainer1>
+                      <Icon>{weatherOptions[data.weather[0].main].icon}</Icon>
+                      <Temp>{Math.round(data.temp.day)}℃</Temp>
+                    </DailySubContainer1>
+                    <DailySubContainer1>
+                      <DailySubContainer4>
+                        <DailySubContainer2>
+                          <MINMAX>최저</MINMAX>
+                          <MINMAX>{Math.round(data.temp.min)}</MINMAX>
+                        </DailySubContainer2>
+                        <DailySubContainer2>
+                          <MINMAX>최대</MINMAX>
+                          <MINMAX>{Math.round(data.temp.max)}</MINMAX>
+                        </DailySubContainer2>
+                      </DailySubContainer4>
+                      <DailySubContainer3>
+                        <MINMAX>강우/강설</MINMAX>
+                        <MINMAX>
+                          {Math.round(data.rain || data.snow || 0)}mm
+                        </MINMAX>
+                      </DailySubContainer3>
+                    </DailySubContainer1>
+                  </DailyMainContainer2>
+                  <Line></Line>
+                  <MINMAX>{formatFutureDate(data.dt)}</MINMAX>
+                </DailyMainContainer1>
+              ))}
+            </SmallSwiperContainer>
+          </SemiOpacity>
+          <EmptySmallSpace></EmptySmallSpace>
+          <WeeklyText>Weekly</WeeklyText>
 
-        <SemiOpacity>
-          <WeeklyView>
-            <LeftView>
-              <MINMAX>DAY</MINMAX>
-              <MINMAX>ICON</MINMAX>
-              <MINMAX>℃</MINMAX>
-            </LeftView>
-            {futureData.daily.slice(0, 6).map((data) => (
-              <ColumnView>
-                <MINMAX>{formatFutureDay(data.dt)}</MINMAX>
-                <MINMAX>{weatherOptions[data.weather[0].main].icon}</MINMAX>
-                <MINMAX>{Math.round(data.temp.day)}</MINMAX>
-              </ColumnView>
-            ))}
-          </WeeklyView>
-        </SemiOpacity>
-      </RefreshingScroll>
-    </BGcolor>
+          <SemiOpacity>
+            <WeeklyView>
+              <LeftView>
+                <MINMAX></MINMAX>
+                <MINMAX>날씨</MINMAX>
+                <MINMAX>온도</MINMAX>
+              </LeftView>
+              {futureData.daily.slice(0, 6).map((data) => (
+                <ColumnView>
+                  <MINMAX>{formatFutureDay(data.dt)}</MINMAX>
+                  <MINMAX>{weatherOptions[data.weather[0].main].icon}</MINMAX>
+                  <MINMAX>{Math.round(data.temp.day)}</MINMAX>
+                </ColumnView>
+              ))}
+            </WeeklyView>
+          </SemiOpacity>
+        </RefreshingScroll>
+      </BGcolor>
+    </LinearGradient>
   );
 };
