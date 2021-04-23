@@ -71,8 +71,6 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
   const navigation = useNavigation();
   useLayoutEffect(() => navigation.setOptions({ headerTitleAlign: "center" }));
 
-  // console.log(hourlyData);
-
   const hourlyHeader = hourlyData.hourly;
 
   return loading ? null : (
@@ -98,9 +96,15 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
                   <Vertical>
                     <ColumnView>
                       <HourlySmallText>{formatHour(data.dt)}</HourlySmallText>
-                      <HourlyText>{weatherOptions[main].icon}</HourlyText>
-                      <HourlySmallText>{data.temp}</HourlySmallText>
-                      <HourlySmallText>{data.wind_speed}</HourlySmallText>
+                      <HourlyText>
+                        {weatherOptions[String(data.weather[0].main)].icon}
+                      </HourlyText>
+                      <HourlySmallText>
+                        {Math.round(data.temp * 10) / 10}
+                      </HourlySmallText>
+                      <HourlySmallText>
+                        {Math.round(data.wind_speed * 10) / 10}
+                      </HourlySmallText>
                       <HourlySmallText>{data.clouds}</HourlySmallText>
                       <HourlySmallText>
                         {data.rain?.["1h"] || 0}

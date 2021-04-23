@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Settings } from "react-native";
 import { useEffect } from "react/cjs/react.development";
 import { getWeather } from "../../API";
 import TodayUIUX from "./TodayUIUX";

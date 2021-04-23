@@ -5,35 +5,67 @@ import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 
 import Geocoder from "react-native-geocoding";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import styled from "styled-components";
+import { LinearGradient } from "expo-linear-gradient";
+import { weatherOptions } from "../Weather";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#d7f1f0",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 50,
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height * 0.7,
+    height: Dimensions.get("window").height * 0.68,
   },
 });
 
 const Google_API_KEY = "AIzaSyAqe6s7YjvCTBbZSaYWayULASiO180dHCM";
 
-export default ({ coordsState, setCoordsState, aa }) => {
+const SearchView = styled.View`
+  margin-vertical: 15px;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+const MarkerSettingView = styled.View`
+  background-color: #3ba2b9;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SettedLocationView = styled.View`
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 7px;
+  margin-bottom: 13px;
+`;
+
+const SettedLocationText = styled.Text`
+  color: black;
+`;
+
+const MarkerSettingText = styled.Text`
+  color: white;
+`;
+
+const BGcolor = styled.View`
+  background-color: #d7f1f0;
+`;
+
+export default ({ coordsState, setCoordsState }) => {
   const [currentCoordsState, setCurrentCoordsState] = useState({
     loading: true,
     currentLatitude: null,
     currentLongitude: null,
     markers: null,
     geocodeResult: null,
-  });
-
-  const [searchCoordsState, setSearchCoordsState] = useState({
-    latitude: null,
-    longitude: null,
   });
 
   const getGeocodeName = async (Lat, Long) => {
@@ -85,31 +117,47 @@ export default ({ coordsState, setCoordsState, aa }) => {
     }
   };
 
-  const [value, onChangeText] = useState("입력");
+  const [value, onChangeText] = useState();
+
+  const buttonPress = () => {
+    searchGeocode(value);
+    <MapView
+      region={{
+        latitude: currentCoordsState.currentLatitude,
+        longitude: currentCoordsState.currentLongitude,
+      }}
+    />;
+  };
 
   return coordsState.loading ? null : (
-    <View>
-      <TextInput
-        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-        onChangeText={(text) => onChangeText(text)}
-        value={value}
-      />
-      <Button
-        title="검색"
-        onPress={() => {
-          searchGeocode(value);
-          <MapView
-            region={{
-              latitude: currentCoordsState.currentLatitude,
-              longitude: currentCoordsState.currentLongitude,
-            }}
-          />;
-        }}
-      />
+    <BGcolor>
+      <SearchView>
+        <TextInput
+          style={{
+            height: 40,
+            width: Dimensions.get("window").width * 0.6,
+            borderColor: "gray",
+            backgroundColor: "white",
+            borderWidth: 1,
+          }}
+          onChangeText={(text) => onChangeText(text)}
+          placeholder={"  날씨를 알고 싶은 지역명을 입력하세요"}
+          value={value}
+          onSubmitEditing={buttonPress}
+        />
+        <Button title="검색" onPress={buttonPress} color={"#3ba2b9"} />
+      </SearchView>
+
       <TouchableOpacity onPress={setCodeName}>
-        <Text>마커 위치로 설정</Text>
-        <Text>{aa}</Text>
+        <MarkerSettingView>
+          <MarkerSettingText>마커 위치로 날씨 설정</MarkerSettingText>
+        </MarkerSettingView>
       </TouchableOpacity>
+      <SettedLocationView>
+        <SettedLocationText>
+          설정위치: {coordsState.geoCodeName || "설정된 마커없음"}
+        </SettedLocationText>
+      </SettedLocationView>
       <MapView
         style={styles.map}
         showsUserLocation={true}
@@ -135,6 +183,6 @@ export default ({ coordsState, setCoordsState, aa }) => {
           <Marker coordinate={currentCoordsState.markers} />
         )}
       </MapView>
-    </View>
+    </BGcolor>
   );
 };

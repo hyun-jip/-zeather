@@ -23,9 +23,6 @@ export default ({ navigation, route }) => {
     geocodeAPI: [],
   });
 
-  const setLATLONG = (LAT, LONG) =>
-    setCoordsState({ latitude: LAT, longitude: LONG });
-
   useLayoutEffect(() => {
     const title = getHeaderName(route);
     navigation.setOptions({ title, headerTitleAlign: "center" });
@@ -99,11 +96,7 @@ export default ({ navigation, route }) => {
       <Tab.Screen
         name="설정"
         children={() => (
-          <Settings
-            aa={coordsState.latitude}
-            coordsState={coordsState}
-            setCoordsState={setCoordsState}
-          />
+          <Settings coordsState={coordsState} setCoordsState={setCoordsState} />
         )}
       />
     </Tab.Navigator>
