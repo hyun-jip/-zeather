@@ -34,17 +34,14 @@ const HourlyText = styled.Text`
 `;
 
 const HourlyMiddleText = styled.Text`
-  font-size: 25px;
+  font-size: 13px;
+  color: #485563;
+  font-weight: bold;
 `;
 
 const HourlySmallText = styled.Text`
   font-size: 20px;
   margin-bottom: 5px;
-`;
-
-const HourlySmallRedText = styled.Text`
-  font-size: 20px;
-  color: #774558;
 `;
 
 const ColumnView = styled.View`
@@ -53,8 +50,16 @@ const ColumnView = styled.View`
   height: ${HEIGHT / 2}px;
 `;
 
+const ColumnView2 = styled.View`
+  align-items: center;
+  justify-content: space-around;
+  height: ${HEIGHT / 2}px;
+  padding-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.3);
+`;
+
 const LeftView = styled.View`
-  width: ${WIDTH / 7};
+  width: ${WIDTH / 14};
   height: 100%;
 `;
 
@@ -62,9 +67,16 @@ const RowView = styled.View`
   flex-direction: row;
 `;
 
+const TitleView = styled.View`
+  justify-content: center;
+  align-items: center;
+  margin-top: 3px;
+`;
+
 const TitleText = styled.Text`
-  font-size: 22px;
-  margin-left: 18px;
+  font-size: 15px;
+  font-weight: 100;
+  color: white;
 `;
 
 export default ({ refreshFn, loading, hourlyData, main }) => {
@@ -78,24 +90,26 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
       <BGColor>
         <RefreshingScroll refreshFn={refreshFn} loading={loading}>
           <EmptySpace></EmptySpace>
-          <TitleText>Hourly</TitleText>
+
           <SemiOpacity>
             <RowView>
               <LeftView>
-                <ColumnView>
+                <ColumnView2>
                   <HourlySmallText></HourlySmallText>
                   <HourlyMiddleText></HourlyMiddleText>
-                  <HourlyMiddleText>🌡</HourlyMiddleText>
-                  <HourlyMiddleText>🌬</HourlyMiddleText>
-                  <HourlyMiddleText>☁</HourlyMiddleText>
-                  <HourlyMiddleText>☔</HourlyMiddleText>
-                </ColumnView>
+                  <HourlyMiddleText>온도</HourlyMiddleText>
+                  <HourlyMiddleText>바람</HourlyMiddleText>
+                  <HourlyMiddleText>구름</HourlyMiddleText>
+                  <HourlyMiddleText>눈비</HourlyMiddleText>
+                </ColumnView2>
               </LeftView>
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 {hourlyHeader.slice(0, 24).map((data) => (
                   <Vertical>
                     <ColumnView>
-                      <HourlySmallText>{formatHour(data.dt)}</HourlySmallText>
+                      <HourlySmallText>
+                        {formatHour(data.dt, hourlyData.timezone_offset)}
+                      </HourlySmallText>
                       <HourlyText>
                         {weatherOptions[String(data.weather[0].main)].icon}
                       </HourlyText>
@@ -113,8 +127,21 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
                   </Vertical>
                 ))}
               </ScrollView>
+              <LeftView>
+                <ColumnView2>
+                  <HourlySmallText></HourlySmallText>
+                  <HourlyMiddleText></HourlyMiddleText>
+                  <HourlyMiddleText>℃</HourlyMiddleText>
+                  <HourlyMiddleText>㎧</HourlyMiddleText>
+                  <HourlyMiddleText>%</HourlyMiddleText>
+                  <HourlyMiddleText>㎜</HourlyMiddleText>
+                </ColumnView2>
+              </LeftView>
             </RowView>
           </SemiOpacity>
+          <TitleView>
+            <TitleText>좌우로 스크롤 하세요</TitleText>
+          </TitleView>
         </RefreshingScroll>
       </BGColor>
     </LinearGradient>

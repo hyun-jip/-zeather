@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, Anticon, AntDesign } from "@expo/vector-icons";
+import {
+  Ionicons,
+  Anticon,
+  AntDesign,
+  createIconSetFromIcoMoon,
+} from "@expo/vector-icons";
 import Settings from "../Screen/Settings";
 import { useLayoutEffect } from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
@@ -9,6 +14,7 @@ import ForecastBG from "../Screen/Forecast/ForecastBG";
 import HourlyBG from "../Screen/Hourly";
 import { Alert } from "react-native";
 import * as Location from "expo-location";
+import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 
@@ -26,7 +32,6 @@ export default ({ navigation, route }) => {
   useLayoutEffect(() => {
     const title = getHeaderName(route);
     navigation.setOptions({ title, headerTitleAlign: "center" });
-    console.log(coordsState.geoCodeName);
   }, [navigation, route]);
 
   const getLocation = async () => {
@@ -56,19 +61,19 @@ export default ({ navigation, route }) => {
           let iconName;
 
           if (route.name === "지금") {
-            iconName = "beer-sharp";
-          } else if (route.name === "오늘") {
-            iconName = "bicycle";
-          } else if (route.name === "미래") {
-            iconName = "bluetooth";
+            iconName = "staro";
+          } else if (route.name === "시간") {
+            iconName = "clockcircleo";
+          } else if (route.name === "주간") {
+            iconName = "barchart";
           } else if (route.name === "설정") {
-            iconName = "boat";
+            iconName = "find";
           }
           return (
-            <Ionicons
+            <AntDesign
               name={iconName}
               size={26}
-              color={focused ? "skyblue" : "grey"}
+              color={focused ? "#1177e6" : "grey"}
             />
           );
         },
@@ -76,16 +81,18 @@ export default ({ navigation, route }) => {
     >
       <Tab.Screen
         name="지금"
-        children={() => <TodayBG coordsState={coordsState} />}
+        children={() => (
+          <TodayBG coordsState={coordsState} setCoordsState={setCoordsState} />
+        )}
       />
       <Tab.Screen
-        name="오늘"
+        name="시간"
         children={() => (
           <HourlyBG coordsState={coordsState} setCoordsState={setCoordsState} />
         )}
       />
       <Tab.Screen
-        name="미래"
+        name="주간"
         children={() => (
           <ForecastBG
             coordsState={coordsState}

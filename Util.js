@@ -5,20 +5,20 @@ export const formatTime = (time) => {
   return theTime.toLocaleTimeString("ko-KR");
 };
 
-export const formatSunTime = (time) => {
-  const unix_time = moment.unix(time + 32400).format("h:mm");
+export const formatSunTime = (time, offset) => {
+  const unix_time = moment.unix(time - 32400 + offset).format("h:mm");
 
   return unix_time;
 };
 
-export const formatSunAMPM = (time) => {
-  const AMPM = moment.unix(time + 32400).format("A");
+export const formatSunAMPM = (time, offset) => {
+  const AMPM = moment.unix(time - 32400 + offset).format("A");
 
   return AMPM;
 };
 
-export const formatHour = (time) => {
-  const unix_hour = moment.unix(time + 32400).format("H");
+export const formatHour = (time, offset) => {
+  const unix_hour = moment.unix(time - 32400 + offset).format("H");
 
   return unix_hour;
 };

@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Dimensions, Text, View, StyleSheet, Button } from "react-native";
+import {
+  Dimensions,
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Keyboard,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import axios from "axios";
 
 import Geocoder from "react-native-geocoding";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import styled from "styled-components";
-import { LinearGradient } from "expo-linear-gradient";
-import { weatherOptions } from "../Weather";
 
 const styles = StyleSheet.create({
   container: {
@@ -20,19 +24,24 @@ const styles = StyleSheet.create({
   },
   map: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height * 0.68,
+    height: Dimensions.get("window").height * 0.6,
+  },
+  touchableOpacity: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
   },
 });
 
 const Google_API_KEY = "AIzaSyAqe6s7YjvCTBbZSaYWayULASiO180dHCM";
 
 const SearchView = styled.View`
-  margin-vertical: 15px;
+  margin-vertical: 10px;
   flex-direction: row;
   justify-content: center;
 `;
 
-const MarkerSettingView = styled.View`
+const InfoView = styled.View`
   background-color: #3ba2b9;
   height: 30px;
   align-items: center;
@@ -44,19 +53,27 @@ const SettedLocationView = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: 7px;
-  margin-bottom: 13px;
 `;
 
 const SettedLocationText = styled.Text`
   color: black;
 `;
 
-const MarkerSettingText = styled.Text`
+const InfoText = styled.Text`
   color: white;
 `;
 
 const BGcolor = styled.View`
-  background-color: #d7f1f0;
+  background-color: #eef2f3;
+`;
+
+const SettingView = styled.View`
+  background-color: #3ba2b9;
+  height: 37px;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  border-radius: 2px;
 `;
 
 export default ({ coordsState, setCoordsState }) => {
@@ -70,8 +87,6 @@ export default ({ coordsState, setCoordsState }) => {
 
   const getGeocodeName = async (Lat, Long) => {
     try {
-      console.log(Lat);
-      console.log(Long);
       const { data } = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${
           Lat || 37.35446511617107
@@ -127,10 +142,19 @@ export default ({ coordsState, setCoordsState }) => {
         longitude: currentCoordsState.currentLongitude,
       }}
     />;
+    Keyboard.dismiss();
   };
 
   return coordsState.loading ? null : (
     <BGcolor>
+      <InfoView>
+        <InfoText>지도를 탭하거나 지명을 검색하여 마커를 설정하세요</InfoText>
+      </InfoView>
+      <SettedLocationView>
+        <SettedLocationText>
+          현재 설정위치: {coordsState.geoCodeName || "설정된 마커없음"}
+        </SettedLocationText>
+      </SettedLocationView>
       <SearchView>
         <TextInput
           style={{
@@ -141,23 +165,19 @@ export default ({ coordsState, setCoordsState }) => {
             borderWidth: 1,
           }}
           onChangeText={(text) => onChangeText(text)}
-          placeholder={"  날씨를 알고 싶은 지역명을 입력하세요"}
+          placeholder={" 검색어를 입력하세요"}
           value={value}
           onSubmitEditing={buttonPress}
         />
         <Button title="검색" onPress={buttonPress} color={"#3ba2b9"} />
       </SearchView>
 
-      <TouchableOpacity onPress={setCodeName}>
-        <MarkerSettingView>
-          <MarkerSettingText>마커 위치로 날씨 설정</MarkerSettingText>
-        </MarkerSettingView>
+      <TouchableOpacity onPress={setCodeName} style={styles.touchableOpacity}>
+        <SettingView>
+          <InfoText>마커 위치로 날씨 설정</InfoText>
+        </SettingView>
       </TouchableOpacity>
-      <SettedLocationView>
-        <SettedLocationText>
-          설정위치: {coordsState.geoCodeName || "설정된 마커없음"}
-        </SettedLocationText>
-      </SettedLocationView>
+
       <MapView
         style={styles.map}
         showsUserLocation={true}
@@ -176,7 +196,6 @@ export default ({ coordsState, setCoordsState }) => {
         }}
         onPress={(e) => {
           setCurrentCoordsState({ markers: e.nativeEvent.coordinate });
-          console.log(currentCoordsState.markers);
         }}
       >
         {currentCoordsState.markers && (

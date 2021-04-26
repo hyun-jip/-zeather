@@ -3,7 +3,12 @@ import { Dimensions, Text, View } from "react-native";
 import SwiperContainer from "../../Component/SwiperContainer";
 import RefreshingScroll from "../../Component/RefreshingScroll";
 import styled from "styled-components/native";
-import { formatTime, formatSunTime, formatSunAMPM } from "../../Util";
+import {
+  formatTime,
+  formatSunTime,
+  formatSunAMPM,
+  formatSunTimeTZ,
+} from "../../Util";
 import { useNavigation } from "@react-navigation/core";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -155,10 +160,30 @@ export default ({ refreshFn, loading, currentData, main, geoCodeName }) => {
               <IconText>🌅</IconText>
               <STContainer>
                 <AMPMContainer>
-                  <Suntime>{formatSunTime(currentHeader.sunrise)}</Suntime>
-                  <AMPM>{formatSunAMPM(currentHeader.sunrise)}</AMPM>
-                  <Suntime> {formatSunTime(currentHeader.sunset)}</Suntime>
-                  <AMPM>{formatSunAMPM(currentHeader.sunset)}</AMPM>
+                  <Suntime>
+                    {formatSunTime(
+                      currentHeader.sunrise,
+                      currentData.timezone_offset
+                    )}
+                  </Suntime>
+                  <AMPM>
+                    {formatSunAMPM(
+                      currentHeader.sunrise,
+                      currentData.timezone_offset
+                    )}
+                  </AMPM>
+                  <Suntime>
+                    {formatSunTime(
+                      currentHeader.sunset,
+                      currentData.timezone_offset
+                    )}
+                  </Suntime>
+                  <AMPM>
+                    {formatSunAMPM(
+                      currentHeader.sunset,
+                      currentData.timezone_offset
+                    )}
+                  </AMPM>
                 </AMPMContainer>
               </STContainer>
               <Description>일출/일몰</Description>

@@ -1,7 +1,7 @@
 export const weatherOptions = {
   Haze: {
     icon: "🌫",
-    gradient: ["#ffe259", "#ffa751"],
+    gradient: ["#4389A2", "#5C258D"],
   },
   Thunderstorm: {
     icon: "🌩",
@@ -9,19 +9,15 @@ export const weatherOptions = {
   },
   Drizzle: {
     icon: "🌦",
-    gradient: ["#005AA7", "#FFFDE4"],
+    gradient: ["#EAECC6", "#2BC0E4"],
   },
   Rain: {
     icon: "🌧",
-    gradient: ["#00F260", "#0575E6"],
+    gradient: ["#E4E5E6", "#00416A"],
   },
   Snow: {
     icon: "⛄",
     gradient: ["#74ebd5", "#ACB6E5"],
-  },
-  Atmosphere: {
-    icon: "🌏",
-    gradient: ["#6D6027", "#D3CBB8"],
   },
   Clear: {
     icon: "🌞",
@@ -29,18 +25,38 @@ export const weatherOptions = {
   },
   Clouds: {
     icon: "⛅",
-    gradient: ["#ffd89b", "#19547b"],
-  },
-  Haze: {
-    icon: "weather-fog",
-    gradient: ["#bdc3c7", "#2c3e50"],
+    gradient: ["#D7DDE8", "#757F9A"],
   },
   Mist: {
-    icon: "🚿",
-    gradient: ["#808080", "#3fada8"],
+    icon: "🌫",
+    gradient: ["#EAEAEA", "#DBDBDB", "#F2F2F2", "#ADA996"],
   },
   Dust: {
     icon: "🏜",
-    gradient: ["2c3e50", "fd746c"],
+    gradient: ["#E7E9BB", "#403B4A"],
+  },
+  Sand: {
+    icon: "🏜",
+    gradient: ["#E7E9BB", "#403B4A"],
+  },
+  Squall: {
+    icon: "🚿",
+    gradient: ["#5FC3E4", "#E55D87"],
+  },
+  Smoke: {
+    icon: "🏭",
+    gradient: ["#bdc3c7", "#2c3e50"],
+  },
+  Fog: {
+    icon: "🏭",
+    gradient: ["#bdc3c7", "#2c3e50"],
+  },
+  Ash: {
+    icon: "🌋",
+    gradient: ["#fd746c", "#2c3e50"],
+  },
+  Tornado: {
+    icon: "🌪",
+    gradient: ["#3d72b4", "#525252"],
   },
 };

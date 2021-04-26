@@ -1,10 +1,11 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Settings } from "react-native";
 import { useEffect } from "react/cjs/react.development";
 import { getWeather } from "../../API";
 import TodayUIUX from "./TodayUIUX";
 
-export default ({ coordsState }) => {
+export default ({ coordsState, setCoordsState }) => {
   const [currentDataState, setCurrentDataState] = useState({
     loading: true,
     main: null,
@@ -27,7 +28,6 @@ export default ({ coordsState }) => {
 
   useEffect(() => {
     getCurrentData();
-    // console.log(coordsState.latitude);
   }, [coordsState]);
 
   return (

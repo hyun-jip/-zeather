@@ -26,7 +26,7 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
   const loadAssets = () => {
     const images = cacheImages([
-      "https://unsplash.com/photos/Vv45XEMJWZk",
+      "https://images.unsplash.com/photo-1558486012-817176f84c6d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=619&q=80",
       require("./assets/splash.png"),
     ]);
 

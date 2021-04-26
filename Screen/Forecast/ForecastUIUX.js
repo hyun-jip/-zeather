@@ -24,7 +24,7 @@ const EmptySpace = styled.View`
 `;
 
 const EmptySmallSpace = styled.View`
-  height: 50px;
+  height: 72px;
 `;
 
 const DailyMainContainer1 = styled.View`
@@ -86,7 +86,6 @@ const LeftView = styled.View`
   align-items: center;
   justify-content: space-around;
   margin-left: 20px;
-  margin-right: 10px;
 `;
 
 const Icon = styled.Text`
@@ -104,6 +103,13 @@ const MINMAX = styled.Text`
 const WeeklyText = styled.Text`
   font-size: 22px;
   margin-left: 18px;
+  font-weight: bold;
+`;
+
+const MiddleText = styled.Text`
+  font-size: 13px;
+  color: #485563;
+  font-weight: bold;
 `;
 
 export default ({ refreshFn, loading, futureData, main }) => {
@@ -140,7 +146,9 @@ export default ({ refreshFn, loading, futureData, main }) => {
                       <DailySubContainer3>
                         <MINMAX>강우/강설</MINMAX>
                         <MINMAX>
-                          {Math.round(data.rain || data.snow || 0)}mm
+                          {Math.round(data.rain * 10 || data.snow * 10 || 0) /
+                            10}
+                          mm
                         </MINMAX>
                       </DailySubContainer3>
                     </DailySubContainer1>
@@ -152,14 +160,13 @@ export default ({ refreshFn, loading, futureData, main }) => {
             </SmallSwiperContainer>
           </SemiOpacity>
           <EmptySmallSpace></EmptySmallSpace>
-          <WeeklyText>Weekly</WeeklyText>
 
           <SemiOpacity>
             <WeeklyView>
               <LeftView>
-                <MINMAX></MINMAX>
-                <MINMAX>날씨</MINMAX>
-                <MINMAX>온도</MINMAX>
+                <MiddleText>일자</MiddleText>
+                <MiddleText>날씨</MiddleText>
+                <MiddleText>온도</MiddleText>
               </LeftView>
               {futureData.daily.slice(0, 6).map((data) => (
                 <ColumnView>
