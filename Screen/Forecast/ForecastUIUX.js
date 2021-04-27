@@ -100,9 +100,10 @@ const MINMAX = styled.Text`
   font-size: 20px;
 `;
 
-const WeeklyText = styled.Text`
-  font-size: 22px;
-  margin-left: 18px;
+const DateText = styled.Text`
+  font-size: 15px;
+  color: #485563;
+  padding-top: 3px;
   font-weight: bold;
 `;
 
@@ -170,7 +171,7 @@ export default ({ refreshFn, loading, futureData, main }) => {
               </LeftView>
               {futureData.daily.slice(0, 6).map((data) => (
                 <ColumnView>
-                  <MINMAX>{formatFutureDay(data.dt)}</MINMAX>
+                  <DateText>{formatFutureDay(data.dt)}</DateText>
                   <MINMAX>{weatherOptions[data.weather[0].main].icon}</MINMAX>
                   <MINMAX>{Math.round(data.temp.day)}</MINMAX>
                 </ColumnView>

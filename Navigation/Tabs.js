@@ -103,7 +103,11 @@ export default ({ navigation, route }) => {
       <Tab.Screen
         name="설정"
         children={() => (
-          <Settings coordsState={coordsState} setCoordsState={setCoordsState} />
+          <Settings
+            coordsState={coordsState}
+            setCoordsState={setCoordsState}
+            getLocation={getLocation}
+          />
         )}
       />
     </Tab.Navigator>

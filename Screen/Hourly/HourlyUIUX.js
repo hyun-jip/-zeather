@@ -37,6 +37,13 @@ const HourlyMiddleText = styled.Text`
   font-size: 13px;
   color: #485563;
   font-weight: bold;
+  padding-bottom: 5px;
+`;
+
+const HourText = styled.Text`
+  font-size: 16px;
+  color: #485563;
+  font-weight: bold;
 `;
 
 const HourlySmallText = styled.Text`
@@ -54,7 +61,7 @@ const ColumnView2 = styled.View`
   align-items: center;
   justify-content: space-around;
   height: ${HEIGHT / 2}px;
-  padding-bottom: 5px;
+
   background-color: rgba(255, 255, 255, 0.3);
 `;
 
@@ -95,7 +102,7 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
             <RowView>
               <LeftView>
                 <ColumnView2>
-                  <HourlySmallText></HourlySmallText>
+                  <HourlyMiddleText></HourlyMiddleText>
                   <HourlyMiddleText></HourlyMiddleText>
                   <HourlyMiddleText>온도</HourlyMiddleText>
                   <HourlyMiddleText>바람</HourlyMiddleText>
@@ -107,9 +114,9 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
                 {hourlyHeader.slice(0, 24).map((data) => (
                   <Vertical>
                     <ColumnView>
-                      <HourlySmallText>
-                        {formatHour(data.dt, hourlyData.timezone_offset)}
-                      </HourlySmallText>
+                      <HourText>
+                        {formatHour(data.dt, hourlyData.timezone_offset)}시
+                      </HourText>
                       <HourlyText>
                         {weatherOptions[String(data.weather[0].main)].icon}
                       </HourlyText>
@@ -129,7 +136,7 @@ export default ({ refreshFn, loading, hourlyData, main }) => {
               </ScrollView>
               <LeftView>
                 <ColumnView2>
-                  <HourlySmallText></HourlySmallText>
+                  <HourlyMiddleText></HourlyMiddleText>
                   <HourlyMiddleText></HourlyMiddleText>
                   <HourlyMiddleText>℃</HourlyMiddleText>
                   <HourlyMiddleText>㎧</HourlyMiddleText>

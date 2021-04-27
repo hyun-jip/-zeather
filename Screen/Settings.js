@@ -42,7 +42,7 @@ const SearchView = styled.View`
 `;
 
 const InfoView = styled.View`
-  background-color: #3ba2b9;
+  background-color: #485563;
   height: 30px;
   align-items: center;
   justify-content: center;
@@ -63,20 +63,36 @@ const InfoText = styled.Text`
   color: white;
 `;
 
+const InfoBlackText = styled.Text`
+  color: #485563;
+  font-weight: bold;
+  padding-bottom: 15px;
+`;
+
 const BGcolor = styled.View`
   background-color: #eef2f3;
 `;
 
 const SettingView = styled.View`
-  background-color: #3ba2b9;
+  background-color: #485563;
   height: 37px;
   align-items: center;
   justify-content: center;
-  width: 170px;
+  width: 90px;
   border-radius: 2px;
 `;
 
-export default ({ coordsState, setCoordsState }) => {
+const SettingContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SpaceView = styled.View`
+  width: 10px;
+`;
+
+export default ({ coordsState, setCoordsState, getLocation }) => {
   const [currentCoordsState, setCurrentCoordsState] = useState({
     loading: true,
     currentLatitude: null,
@@ -152,7 +168,7 @@ export default ({ coordsState, setCoordsState }) => {
       </InfoView>
       <SettedLocationView>
         <SettedLocationText>
-          현재 설정위치: {coordsState.geoCodeName || "설정된 마커없음"}
+          날씨 설정위치: {coordsState.geoCodeName || "현재 위치"}
         </SettedLocationText>
       </SettedLocationView>
       <SearchView>
@@ -169,15 +185,24 @@ export default ({ coordsState, setCoordsState }) => {
           value={value}
           onSubmitEditing={buttonPress}
         />
-        <Button title="검색" onPress={buttonPress} color={"#3ba2b9"} />
+        <Button title="검색" onPress={buttonPress} color={"#485563"} />
       </SearchView>
 
-      <TouchableOpacity onPress={setCodeName} style={styles.touchableOpacity}>
-        <SettingView>
-          <InfoText>마커 위치로 날씨 설정</InfoText>
-        </SettingView>
-      </TouchableOpacity>
-
+      <SettingContainer>
+        <InfoBlackText>날씨 설정 :</InfoBlackText>
+        <SpaceView></SpaceView>
+        <TouchableOpacity onPress={getLocation} style={styles.touchableOpacity}>
+          <SettingView>
+            <InfoText>현재 위치</InfoText>
+          </SettingView>
+        </TouchableOpacity>
+        <SpaceView></SpaceView>
+        <TouchableOpacity onPress={setCodeName} style={styles.touchableOpacity}>
+          <SettingView>
+            <InfoText>마커 위치</InfoText>
+          </SettingView>
+        </TouchableOpacity>
+      </SettingContainer>
       <MapView
         style={styles.map}
         showsUserLocation={true}
