@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b2c68752-f2f4-4b15-8cf8-e91887ff2f64" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Navigation/Tabs.js" beforeDir="false" afterPath="$PROJECT_DIR$/Navigation/Tabs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screen/Forecast/ForecastUIUX.js" beforeDir="false" afterPath="$PROJECT_DIR$/Screen/Forecast/ForecastUIUX.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1rl3WDJ2JoNfaexA2hPZYARWAiP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b2c68752-f2f4-4b15-8cf8-e91887ff2f64" name="Default Changelist" comment="" />
+      <created>1619536878675</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1619536878675</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="617" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1619536932924">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="617" y="176" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1619536932924" />
+    <state x="563" y="122" width="1200" height="800" key="AVDManager" timestamp="1619587341354">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="563" y="122" width="1200" height="800" key="AVDManager/0.0.1920.1040@0.0.1920.1040" timestamp="1619587341354" />
+  </component>
+</project>

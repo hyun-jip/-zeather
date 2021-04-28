@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {
-  Ionicons,
-  Anticon,
-  AntDesign,
-  createIconSetFromIcoMoon,
-} from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import Settings from "../Screen/Settings";
 import { useLayoutEffect } from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
@@ -14,7 +9,6 @@ import ForecastBG from "../Screen/Forecast/ForecastBG";
 import HourlyBG from "../Screen/Hourly";
 import { Alert } from "react-native";
 import * as Location from "expo-location";
-import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +16,7 @@ const getHeaderName = (route) => getFocusedRouteNameFromRoute(route) || "지금"
 
 export default ({ navigation, route }) => {
   const [coordsState, setCoordsState] = useState({
-    loading: true,
+    loading: false,
     latitude: null,
     longitude: null,
     geoCodeName: null,
@@ -39,14 +33,16 @@ export default ({ navigation, route }) => {
       await Location.requestPermissionsAsync();
       const {
         coords: { latitude, longitude },
-      } = await Location.getCurrentPositionAsync();
+      } = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.High,
+      });
       setCoordsState({
         loading: false,
         latitude: latitude,
         longitude: longitude,
       });
     } catch (error) {
-      Alert.alert("Can't find you.", "So sad");
+      console.log(error);
     }
   };
 

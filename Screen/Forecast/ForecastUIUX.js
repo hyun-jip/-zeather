@@ -117,8 +117,6 @@ export default ({ refreshFn, loading, futureData, main }) => {
   const navigation = useNavigation();
   useLayoutEffect(() => navigation.setOptions({ headerTitleAlign: "center" }));
 
-  console.log(futureData);
-
   return loading ? null : (
     <LinearGradient colors={weatherOptions[main].gradient}>
       <BGcolor>
